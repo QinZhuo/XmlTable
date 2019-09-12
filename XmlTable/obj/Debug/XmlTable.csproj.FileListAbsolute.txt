@@ -1,0 +1,11 @@
+D:\Project\XmlTable\XmlTable\bin\Debug\XmlTable.exe.config
+D:\Project\XmlTable\XmlTable\bin\Debug\XmlTable.exe
+D:\Project\XmlTable\XmlTable\bin\Debug\XmlTable.pdb
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.csprojAssemblyReference.cache
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.Properties.Resources.resources
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.csproj.GenerateResource.cache
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.csproj.CoreCompileInputs.cache
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.exe
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.pdb
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.XmlTableEditor.resources
+D:\Project\XmlTable\XmlTable\obj\Debug\XmlTable.ColumnName.resources

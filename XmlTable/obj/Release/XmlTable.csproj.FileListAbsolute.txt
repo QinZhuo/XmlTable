@@ -1,0 +1,9 @@
+D:\Project\XmlTable\XmlTable\bin\Release\XmlTable.exe.config
+D:\Project\XmlTable\XmlTable\bin\Release\XmlTable.exe
+D:\Project\XmlTable\XmlTable\bin\Release\XmlTable.pdb
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.XmlTableEditor.resources
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.Properties.Resources.resources
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.csproj.GenerateResource.cache
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.csproj.CoreCompileInputs.cache
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.exe
+D:\Project\XmlTable\XmlTable\obj\Release\XmlTable.pdb

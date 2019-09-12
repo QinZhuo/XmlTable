@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTable", "XmlTable\XmlTable.csproj", "{9E53FC37-D40C-4E23-BF41-9086188F800B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E53FC37-D40C-4E23-BF41-9086188F800B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E53FC37-D40C-4E23-BF41-9086188F800B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E53FC37-D40C-4E23-BF41-9086188F800B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E53FC37-D40C-4E23-BF41-9086188F800B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B49EFB5D-D315-4179-9AEE-3BC13760CCFE}
+	EndGlobalSection
+EndGlobal
