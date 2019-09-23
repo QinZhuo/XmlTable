@@ -209,6 +209,10 @@ namespace XmlTable
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isEditMode)
+            {
+               tableView.EndEdit();
+            }
           
             if (innerDataList.Count > 1)
             {
@@ -249,7 +253,7 @@ namespace XmlTable
                 statusLabel.Text = "选择表格【" + (e.RowIndex+1) + "," + tableView.Columns[e.ColumnIndex].Name + "】";
                 selectCell = tableView[e.ColumnIndex, e.RowIndex];
                 selectRow = null;
-                deleteRowToolStripMenuItem.Enabled = false;
+              //  deleteRowToolStripMenuItem.Enabled = false;
             }
             else
             {
@@ -263,7 +267,7 @@ namespace XmlTable
                     statusLabel.Text = "选择【" + e.RowIndex+1+ "】行";
                     selectRow = tableView.Rows[e.RowIndex];
                     selectColumn = null;
-                    deleteRowToolStripMenuItem.Enabled = true;
+                 //   deleteRowToolStripMenuItem.Enabled = true;
                 }
                 else if(e.RowIndex<0)
                 {
@@ -285,8 +289,19 @@ namespace XmlTable
         {
             if (!isEditMode)
             {
-                Clipboard.SetText(selectCell.Value.ToString());
-                statusLabel.Text = "复制【" + selectCell.Value.ToString() + "】";
+                if (selectCell != null && selectCell.Value!= null)
+                {
+                    string text = selectCell.Value.ToString();
+                    if (text == "")
+                    {
+                        Clipboard.SetText(" ");
+                    }
+                    else
+                    {
+                        Clipboard.SetText(text);
+                    }
+                    statusLabel.Text = "复制【" + selectCell.Value.ToString() + "】";
+                }
             }
            
         }
@@ -303,9 +318,17 @@ namespace XmlTable
 
         private void deleteRowToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (selectCell!=null)
+            {
+                selectCell.Value = "";
+            }
             if (selectRow != null)
             {
-                tableView.Rows.Remove(selectRow);
+                foreach (DataGridViewCell cell in selectRow.Cells)
+                {
+                    cell.Value = "";
+                }
+                //tableView.Rows.Remove(selectRow);
             }
         }
 
@@ -341,6 +364,11 @@ namespace XmlTable
             pasteToolStripMenuItem.Enabled = true;
             statusLabel.Text = "结束编辑单元格";
         }
+
+        private void tableView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 
     public class InnerData
@@ -356,7 +384,7 @@ namespace XmlTable
         {
             var root = xml.LastChild;
 
-       
+            List<XmlNode> removeList = new List<XmlNode>();
             for (int row = 0; row < data.Rows.Count; row++)
             {
                 var rowNode = root.ChildNodes[row];
@@ -393,13 +421,23 @@ namespace XmlTable
                             rowNode.AppendChild(node);
                         }
                     }
+                   
                 }
                 else
                 {
-                    rowNode.InnerXml = data.Rows[row][0].ToString();
+                    var info = data.Rows[row][0].ToString();
+                  
+                        rowNode.InnerXml = data.Rows[row][0].ToString();
+                    
                 }
-                
-                
+                if (string.IsNullOrWhiteSpace(rowNode.InnerText))
+                {
+                    removeList.Add(rowNode);
+                }
+            }
+            foreach (var node in removeList)
+            {
+                root.RemoveChild(node);
             }
             return root;
            
