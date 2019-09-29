@@ -74,24 +74,43 @@ namespace XmlTable
         {
             return str.Contains("<") && str.Contains(">");
         }
-        public bool IsGrid(XmlNode xml)
+        public GridType GetGridType(XmlNode xml)
         {
-            var isGrid= true;
-            if (!IsXml(xml.FirstChild.InnerXml))
-            {
-                return false;
-            }
+            GridType type = GridType.none;
+            bool nameCheck = true;
             var name = xml.FirstChild.Name;
             foreach (XmlNode node in xml.ChildNodes)
             {
                 if (node.Name != name)
                 {
-                    isGrid = false;
+                    nameCheck = false;
                     break;
                 }
             }
-           
-            return isGrid;
+            if (!IsXml(xml.FirstChild.InnerXml))
+            {
+                if (nameCheck)
+                {
+                    type = GridType.col;
+                }
+                else
+                {
+                    type = GridType.row;
+                }
+            }
+            else
+            {
+                if (nameCheck)
+                {
+                    type = GridType.Grid;
+                }
+                else
+                {
+                    type = GridType.none;
+                }
+
+            }
+            return type;
         }
      
         private void ParseXml(InnerData innerData)
@@ -99,8 +118,8 @@ namespace XmlTable
             var root = innerData.xml.LastChild;
             var colList = root.FirstChild;
       
-            innerData.isGrid = IsGrid(root);
-            if (innerData.isGrid)
+            innerData.gridType = GetGridType(root);
+            if (innerData.gridType== GridType.Grid)
             {
              
                 int x = 0;
@@ -123,7 +142,7 @@ namespace XmlTable
                  
                 }
             }
-            else 
+            else
             {
                 innerData.data.Columns.Add(colList.Name);
 
@@ -142,7 +161,6 @@ namespace XmlTable
                     innerData.data.Rows[x][cell.Name]= cell.InnerXml;
                     y++;
                     x++;
-
                 }
             }
             
@@ -167,6 +185,7 @@ namespace XmlTable
         }
         private void ParseRootXml(string xmlstr)
         {
+            innerDataList.Clear();
             xmlDoc = new XmlDocument();
             var data = new DataTable();
             xmlDoc.LoadXml(xmlstr);
@@ -371,6 +390,14 @@ namespace XmlTable
         }
     }
 
+    public enum GridType
+    {
+        none,
+        Grid,
+        row,
+        col,
+        
+    }
     public class InnerData
     {
         public int col;
@@ -379,7 +406,7 @@ namespace XmlTable
         public DataTable data;
         public XmlNode xml;
         public XmlDocument xmlDoc;
-        public bool isGrid;
+        public GridType gridType;
         public XmlNode UpdateChange()
         {
             var root = xml.LastChild;
@@ -397,8 +424,8 @@ namespace XmlTable
                         root.AppendChild(rowNode);
                     }
                 }
-               
-                if(XmlTableEditor.IsXml(root.FirstChild.InnerXml))
+
+                if (XmlTableEditor.IsXml(root.FirstChild.InnerXml))
                 {
                     for (int col = 0; col < data.Columns.Count; col++)
                     {
@@ -417,18 +444,20 @@ namespace XmlTable
                         {
                             var node = xmlDoc.CreateElement(data.Columns[col].ColumnName);
                             node.InnerXml = cell;
-                         
+
                             rowNode.AppendChild(node);
                         }
                     }
-                   
+
                 }
                 else
                 {
                     var info = data.Rows[row][0].ToString();
-                  
-                        rowNode.InnerXml = data.Rows[row][0].ToString();
-                    
+                    for (int col = 0; col < data.Columns.Count; col++)
+                    {
+                        var cell = data.Rows[row][col].ToString();
+
+                    }
                 }
                 if (string.IsNullOrWhiteSpace(rowNode.InnerText))
                 {
