@@ -91,11 +91,11 @@ namespace XmlTable
             {
                 if (nameCheck)
                 {
-                    type = GridType.col;
+                    type = GridType.row;
                 }
                 else
                 {
-                    type = GridType.row;
+                    type = GridType.col;
                 }
             }
             else
@@ -452,12 +452,44 @@ namespace XmlTable
                 }
                 else
                 {
-                    var info = data.Rows[row][0].ToString();
-                    for (int col = 0; col < data.Columns.Count; col++)
-                    {
-                        var cell = data.Rows[row][col].ToString();
+                    MessageBox.Show(gridType.ToString());
 
+                    if(gridType == GridType.row&&data.Columns.Count>1)
+                    {
+                        gridType = GridType.col;
                     }
+                    if (gridType == GridType.row)
+                    {
+                        rowNode.InnerXml = data.Rows[row][0].ToString();
+                    }
+                    else if (gridType == GridType.col)
+                    {
+
+                       
+                        for (int col = 0; col < data.Columns.Count; col++)
+                        {
+                            var cell = data.Rows[row][col].ToString();
+                            if (string.IsNullOrEmpty(cell))
+                            {
+                                continue;
+                            }
+                            var name = data.Columns[col].ColumnName;
+                            var cellNode = root.SelectSingleNode(name);
+                            if (cellNode != null)
+                            {
+                                cellNode.InnerXml = cell;
+                            }
+                            else
+                            {
+                                var node = xmlDoc.CreateElement(data.Columns[col].ColumnName);
+                                node.InnerXml = cell;
+
+                                root.AppendChild(node);
+                            }
+                        }
+                    }
+                   // var info = data.Rows[row][0].ToString();
+                   
                 }
                 if (string.IsNullOrWhiteSpace(rowNode.InnerText))
                 {
